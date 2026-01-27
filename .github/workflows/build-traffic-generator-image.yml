@@ -1,4 +1,4 @@
-name: Build and publish traffic-generator Docker image
+name: Build and publish traffic-gen Docker image
 
 on:
   push:
@@ -8,7 +8,7 @@ on:
   pull_request:
     paths:
       - "traffic-gen-app/**"
-      - ".github/workflows/build-traffic-generator-image.yml"
+      - ".github/workflows/build-traffic-gen-image.yml"
   workflow_dispatch:
 
 jobs:
@@ -36,7 +36,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build and push traffic-generator image (multi-arch)
+      - name: Build and push traffic-gen image (multi-arch)
         uses: docker/build-push-action@v6
         with:
           context: ./traffic-gen-app

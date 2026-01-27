@@ -33,7 +33,7 @@ go run main.go
 Pour construire l'image Docker :
 
 ```bash
-docker build -t traffic-generator -f Dockerfile .
+docker build -t traffic-gen -f Dockerfile .
 ```
 
 ## Structure

@@ -9,7 +9,7 @@ ARG TARGETOS
 ARG TARGETARCH
 
 RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH \
-  go build -a -installsuffix cgo -o traffic-generator .
+  go build -a -installsuffix cgo -o traffic-gen .
 
 FROM --platform=$TARGETPLATFORM alpine:latest
 
@@ -17,6 +17,6 @@ RUN apk --no-cache add ca-certificates
 
 WORKDIR /root/
 
-COPY --from=builder /app/traffic-generator .
+COPY --from=builder /app/traffic-gen .
 
-CMD ["./traffic-generator"]
+CMD ["./traffic-gen"]

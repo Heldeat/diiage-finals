@@ -26,6 +26,8 @@ spec:
           envFrom:
             - configMapRef:
                 name: {{ include "diiage-finals-app.fullname" . }}-backend-config
+          {{- if .Values.redis.enabled }}
           env:
             - name: REDIS_ADDRESS
               value: "{{ include "diiage-finals-app.fullname" . }}-redis:6379"
+          {{- end }}

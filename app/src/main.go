@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -61,16 +62,30 @@ func main() {
 		if err != nil {
 			httpRequestsTotal.WithLabelValues("/config", "500").Inc()
 			http.Error(w, fmt.Sprintf("Failed to read ConfigMap: %v", err), http.StatusInternalServerError)
+			return
 		}
 
 		configmapReadTotal.Inc()
 		httpRequestsTotal.WithLabelValues("/config", "200").Inc()
 
 		w.Header().Set("Content-Type", "application/json")
-		fmt.Fprintf(w, `{"app_name": "%s", "environment": "%s", "log_level": "%s"}`,
-			cm.Data["APP_NAME"],
-			cm.Data["ENVIRONMENT"],
-			cm.Data["LOG_LEVEL"])
+		json.NewEncoder(w).Encode(cm.Data)
+	})
+
+	http.HandleFunc("/pods", func(w http.ResponseWriter, r *http.Request) {
+		ctx := context.Background()
+
+		pods, err := clientset.CoreV1().Pods("").List(ctx, metav1.ListOptions{})
+		if err != nil {
+			httpRequestsTotal.WithLabelValues("/pods", "500").Inc()
+			http.Error(w, fmt.Sprintf("Failed to list pods: %v", err), http.StatusInternalServerError)
+			return
+		}
+
+		httpRequestsTotal.WithLabelValues("/pods", "200").Inc()
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(pods.Items)
 	})
 
 	http.HandleFunc("/health", func(w http.ResponseWriter, r *http.Request) {

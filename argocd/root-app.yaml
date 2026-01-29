@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/Heldeat/diiage-finals.git'
     targetRevision: HEAD
-    path: argocd/apps  # On va mettre les définitions des apps ici
+    path: argocd/apps  
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: argocd

@@ -1,4 +1,4 @@
-# --- APPLICATION BACKEND ---
+# APPLICATION BACKEND 
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -20,7 +20,7 @@ spec:
     syncOptions:
       - CreateNamespace=true
 ---
-# --- APPLICATION TRAFFIC GENERATOR ---
+# APPLICATION TRAFFIC GENERATOR 
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -41,7 +41,7 @@ spec:
     syncOptions:
       - CreateNamespace=true
 ---
-# --- APPLICATION MONITORING ---
+# APPLICATION MONITORING 
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:

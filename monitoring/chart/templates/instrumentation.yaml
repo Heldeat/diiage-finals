@@ -1,0 +1,13 @@
+apiVersion: opentelemetry.io/v1alpha1
+kind: Instrumentation
+metadata:
+  name: monitoring-instrumentation
+  namespace: monitoring-ns
+spec:
+  exporter:
+    endpoint: http://monitoring-opentelemetry-collector:4317
+  propagators:
+    - tracecontext
+    - baggage
+  sampler:
+    type: parentbased_always_on

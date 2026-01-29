@@ -151,8 +151,13 @@ tempo:
 
 # Grafana configuration
 grafana:
+  initChownData:
+    enabled: false
   enabled: true
-  
+  image:
+    repository: grafana/grafana
+    tag: 10.2.3
+
   adminUser: admin
   adminPassword: admin
   

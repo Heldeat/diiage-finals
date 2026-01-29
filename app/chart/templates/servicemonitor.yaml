@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "diiage-finals-app.fullname" . }}-backend-monitor
+  labels:
+    {{- include "diiage-finals-app.labels" . | nindent 4 }}
+    release: monitoring # Doit correspondre au nom de ta stack Prometheus
+spec:
+  selector:
+    matchLabels:
+      app: {{ include "diiage-finals-app.name" . }}-backend
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 15s
